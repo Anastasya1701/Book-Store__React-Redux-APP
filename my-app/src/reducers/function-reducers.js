@@ -44,7 +44,7 @@ const updateOrder = (state, bookId, quontity) => {
     let newItem = updateItem(item, book, quontity)
 
     return {
-        orderTotal: 0,
+        orderTotal: item ? newItem.total : newItem.total + state.shoppingCard.orderTotal,
         cardItems: updateCardItems(cardItems, newItem, idx)
     }
 }

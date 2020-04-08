@@ -35,18 +35,18 @@ const onDecrease = id => {
     }
 }
 
-const fetchBooks = (bookstoreService, dispatch) => () => {
+const fetchBooks = (bookstoreService) => dispatch => {
     dispatch(booksRequested());
     bookstoreService.getBooks()
         .then((data) => dispatch(booksLoaded(data)))
         .catch((err) => dispatch(booksError(err)))
-
 }
-const bookAddedToCard = (bookId) => {
-    return {
+
+const bookAddedToCard = (bookId) => dispatch => {
+    dispatch({
         type: 'BOOK_ADDED_TO_CARD',
         payload: bookId
-    }
+    })
 }
 
 export {
@@ -54,5 +54,4 @@ export {
     bookAddedToCard,
     onDelete,
     onDecrease,
-
 }

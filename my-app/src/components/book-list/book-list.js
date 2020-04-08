@@ -10,7 +10,8 @@ import './book-list.css'
 import {Spinner} from "../spiner";
 import {ErrorIndicator} from "../error-Indicator";
 
-const BookList = ({books, onAddedToCard }) => {
+const BookList = ({books, bookAddedToCard }) => {
+
     return (
         <ul>
             {
@@ -18,7 +19,7 @@ const BookList = ({books, onAddedToCard }) => {
                     return <li>
                         <BookListItem
                             book={book}
-                            onAddedToCard={() => onAddedToCard(book.id)}/>
+                            bookAddedToCard={() => bookAddedToCard(book.id)}/>
                     </li>
                 })
             }
@@ -29,11 +30,11 @@ const BookList = ({books, onAddedToCard }) => {
 class BookListContainer extends Component {
 
     componentDidMount() {
-        this.props.fetchBooks()
+        this.props.fetchBooks(this.props.bookstoreService)
     }
 
     render() {
-        const {books, loading, error, onAddedToCard} = this.props
+        const {books, loading, error, bookAddedToCard} = this.props
 
         if (loading) {
             return <Spinner/>
@@ -43,7 +44,7 @@ class BookListContainer extends Component {
         }
         return <BookList
             books={books}
-            onAddedToCard={onAddedToCard}
+            bookAddedToCard={bookAddedToCard}
         />
     }
 }
@@ -54,19 +55,9 @@ const mapStateToProps = ({bookList: {books, loading, error}}) => {
      return {books, loading, error}
 }
 
-const mapDispatchToProps = (dispatch, ownProps) => {
-    const {bookstoreService} = ownProps
-    return {
-        fetchBooks: fetchBooks(bookstoreService, dispatch),
-        onAddedToCard: (id) => dispatch(bookAddedToCard(id))
-
-    }
-
-}
-
 export default compose(
     WithBookstoreService(),
-    connect(mapStateToProps, mapDispatchToProps)
+    connect(mapStateToProps, {fetchBooks, bookAddedToCard})
 )(BookListContainer)
 
 
