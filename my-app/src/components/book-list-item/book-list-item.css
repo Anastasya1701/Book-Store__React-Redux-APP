@@ -28,6 +28,6 @@
 .book-list-item .book-details .book-price {
     font-size: 1.4rem;
 }
-.book-list {
+li {
     list-style: none;
 }

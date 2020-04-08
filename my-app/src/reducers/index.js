@@ -1,20 +1,25 @@
+import {updateBookList} from "./book-list-reducers";
+import {updateShoppingCard} from "./shopping-card-reducer";
+
 
 const initialState = {
-    books: []
-}
-
-const reducer = (state = initialState, action) => {
-
-
-    switch(action.type) {
-        case 'BOOKS_LOADED':
-            return {
-                books: action.payload,
-            }
-
-        default:
-            return state
+    bookList: {
+        books: [],
+        loading: true,
+        error: null,
+    },
+    shoppingCard: {
+        cardItems: [],
+        orderTotal: 0
     }
 }
 
-export {reducer}
+const reducer = (state, action) => {
+    return {
+        bookList: updateBookList(state, action),
+        shoppingCard: updateShoppingCard(state, action)
+    }
+}
+
+
+export {reducer, initialState}
