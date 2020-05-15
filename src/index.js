@@ -9,8 +9,11 @@ import {App} from './components/app'
 import BookstoreService from "./services/bookstore-services";
 import {ErrorBoundry} from "./components/error-boundry";
 import {BookStoreServiceProvider} from "./components/bookstore-service-context";
+import {subscribeChannel} from "./pushers";
 
 const bookstoreService = new BookstoreService()
+
+subscribeChannel()
 
 ReactDOM.render(
     <Provider store={store}>
